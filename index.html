@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I Love Meat · Pianezza — Menù completo ai funghi porcini 30€</title>
+<meta name="description" content="Solo a ottobre, la domenica a pranzo: menù completo ai funghi porcini dalla battuta di manzo al bunet. 30€ invece di 45€. Prenota un tavolo da I Love Meat, Pianezza (TO).">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* I Love Meat — landing "Menù ai funghi porcini". Nero + oro, display Anton.
+   Le variabili --red* sono rimaste con il nome della landing originale ma
+   contengono l'oro: così basta cambiare la palette qui. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0908;--bg2:#141010;--card:#1a1512;--card2:#211a16;--line:#2c2420;
+  --text:#f2ede6;--muted:#9a9088;
+  --red:#e0a82e;--red-2:#f0bc45;--red-d:#8a6410;
+  --gold:#ffc233;
+  /* i pulsanti restano nel rosso I Love Meat */
+  --cta:#d10a1c;--cta-2:#f01f30;
+  --radius:16px
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.display{font-family:"Anton","Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.94}
+.kicker{color:var(--red);font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.accent{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:17px 32px;border:none;border-radius:999px;background:var(--cta);color:#fff;font-family:"Anton","Arial Narrow",sans-serif;font-size:22px;font-weight:400;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;text-decoration:none;transition:.15s;box-shadow:0 10px 30px rgba(209,10,28,.35)}
+.btn:hover{background:var(--cta-2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:var(--text);font-weight:700}
+.btn-ghost:hover{background:rgba(255,255,255,.04);border-color:var(--red);transform:none}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border:1px solid rgba(224,168,46,.5);border-radius:999px;color:var(--red);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(224,168,46,.08)}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(224,168,46,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(224,168,46,.5)}70%{box-shadow:0 0 0 7px rgba(224,168,46,0)}100%{box-shadow:0 0 0 0 rgba(224,168,46,0)}}
+.stars{color:var(--red);letter-spacing:2px;font-size:14px}
+
+/* ---- NAV ---- */
+/* fissa e trasparente: la foto dell'hero passa sotto e arriva fino in cima.
+   La barra scura ricompare solo quando si scorre, per non perdere leggibilità. */
+.nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;background:transparent;border-bottom:1px solid transparent;transition:background .25s,border-color .25s}
+.nav.scrolled{background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.nav .logo{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:20px;letter-spacing:.02em;line-height:1}
+.nav .logo small{display:block;color:var(--red);font-family:"Inter",sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.22em;margin-top:3px}
+.nav .btn{padding:11px 22px;font-size:18px}
+@media (max-width:600px){.nav .btn{padding:10px 18px;font-size:16px}}
+
+/* ---- HERO (testo sopra immagine scurita) ---- */
+.hero{position:relative;overflow:hidden;min-height:74vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:98px 0 60px}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(.55) saturate(1.05);z-index:0}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,9,8,.55),rgba(10,9,8,.3) 42%,rgba(10,9,8,.96) 96%)}
+.hero-inner{position:relative;z-index:2;max-width:1120px}
+.hero .badge{margin-bottom:18px;background:rgba(10,9,8,.55);backdrop-filter:blur(4px)}
+.hero h1{font-size:clamp(64px,13vw,196px);text-shadow:0 4px 34px rgba(0,0,0,.65)}
+.hero h1 .l2{color:var(--red)}
+.hero .lead{color:#eadfd4;font-size:19px;max-width:42ch;margin:24px auto 32px;text-shadow:0 2px 16px rgba(0,0,0,.8)}
+/* Offerta nell'hero con la stessa impostazione delle altre landing I Love Meat
+   (ferragosto, bombette): pillola in oro, nome del tagliere e cosa contiene,
+   prezzo in oro e la scarsità "Pochi tavoli disponibili" subito sopra il
+   bottone, così è l'ultima cosa che si legge prima del clic. */
+.hero .badge{color:var(--gold);border-color:rgba(255,194,51,.55)}
+.hero .badge .dot{background:var(--gold);box-shadow:0 0 0 0 rgba(255,194,51,.6);animation-name:pulse-gold}
+@keyframes pulse-gold{0%{box-shadow:0 0 0 0 rgba(255,194,51,.5)}70%{box-shadow:0 0 0 7px rgba(255,194,51,0)}100%{box-shadow:0 0 0 0 rgba(255,194,51,0)}}
+/* sottotitolo con l'offerta: nome del tagliere in oro e grassetto, poi cosa c'è dentro */
+.hero .offerta-hero{margin-bottom:14px}
+/* stesso trattamento del titolo della card offerta: Anton, maiuscolo */
+/* "Solo domenica a pranzo": su una riga sua, centrata sopra l'elenco dei piatti, in bianco */
+.hero .nome-offerta{display:block;text-align:center;margin-bottom:8px;color:#fff;font-family:"Anton","Arial Narrow",sans-serif;font-weight:400;
+  text-transform:uppercase;letter-spacing:.03em;font-size:1.8em;line-height:1}
+.hero .prezzo-hero s{margin-right:10px;color:#cfc6bc;font-size:.55em;vertical-align:middle;
+  text-decoration-line:line-through;text-decoration-color:var(--red);text-decoration-thickness:.1em}
+.hero .prezzo-hero{margin:8px 0 14px;color:var(--gold);font-family:"Anton","Arial Narrow",sans-serif;line-height:1;
+  letter-spacing:.02em;font-size:clamp(42px,7.4vw,86px);text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.hero .prezzo-hero .pre{margin-right:10px;font-family:"Inter",sans-serif;font-size:17px;font-weight:600;color:#cfc6bc;vertical-align:middle}
+.hero .scarsita{font-family:"Anton","Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;
+  letter-spacing:.03em;line-height:1.05;font-size:clamp(26px,5.2vw,40px);
+  color:var(--gold);margin:0 auto 18px;max-width:22ch;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.hero .cta-row{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
+.hero .cta-row .btn{line-height:1.08;text-align:center;max-width:100%}
+.hero .rate{font-size:13.5px;color:#cfc6bc;text-shadow:0 1px 10px rgba(0,0,0,.8)}
+.hero .rate b{color:#fff}
+@media (max-width:600px){
+  .wrap{padding:0 20px}
+  /* su mobile la barra resta scura e nel flusso, come prima */
+  .nav{position:sticky;background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+  .hero{min-height:auto;padding:34px 0 44px}
+  /* su schermo stretto "cover" ritaglia troppo: accorcio la foto così inquadra
+     più larga, la sfumo in basso per non lasciare uno stacco netto e la scurisco
+     per tenere leggibili le scritte */
+  .hero-bg{height:78%;filter:brightness(.48) saturate(1.05);object-position:center 42%;
+    -webkit-mask-image:linear-gradient(180deg,#000 68%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 68%,transparent 100%)}
+  .hero .lead{font-size:17px}
+  .hero .cta-row{flex-direction:column;gap:18px}
+  .hero .cta-row .btn{width:100%;max-width:360px;font-size:24px;padding:19px 24px}
+  .hero .rate{text-align:center;font-size:14px}
+  .section{padding:30px 0}
+  .grid2{grid-template-columns:1fr}
+}
+
+/* Desktop: l'hero deve stare dentro la prima schermata e lasciar intravedere
+   la sezione sotto. Su mobile resta com'è. */
+@media (min-width:1000px){
+  .hero{min-height:auto;padding:92px 0 40px}
+  .hero .badge{margin-bottom:14px}
+  .hero h1{font-size:clamp(64px,8.6vw,124px)}
+  .hero .lead{font-size:18px;margin:18px auto 26px}
+  .hero .offerta-hero{margin-bottom:10px}
+  .hero .prezzo-hero{font-size:clamp(34px,4.3vw,60px);margin-bottom:10px}
+  .hero .scarsita{font-size:clamp(28px,2.6vw,40px);margin-bottom:14px}
+}
+@media (min-width:1000px) and (max-height:820px){
+  .hero h1{font-size:clamp(56px,7.4vw,104px)}
+  .hero .lead{margin:14px auto 22px}
+}
+
+/* ---- OFFERTA ---- */
+.section{padding:36px 0}
+.offerta-titolo{color:var(--text);font-size:clamp(26px,3.6vw,40px);margin-bottom:16px}
+.offer{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center;background:linear-gradient(160deg,#241813,#140f0d 70%);border:2px solid rgba(224,168,46,.55);border-radius:24px;padding:44px 34px;text-align:left;overflow:hidden;box-shadow:0 0 0 1px rgba(224,168,46,.12),0 24px 60px rgba(0,0,0,.5)}
+.offer-testo{position:relative;z-index:1}
+.offer h2.offer-title{font-size:clamp(44px,7.4vw,96px);line-height:.9;margin-bottom:20px}
+.offer-title .pre,.offer-title .post{display:block;font-size:.3em;line-height:1.1;color:var(--muted)}
+.offer-title .pre{margin-bottom:6px}
+.offer-title .post{margin-top:8px}
+.offer .sfida{font-size:clamp(21px,2.5vw,32px);line-height:1.04;margin:0 0 18px}
+.offer .sfida .l2{color:var(--red)}
+.offer .price s{display:inline-block;margin-right:14px;color:var(--muted);font-size:.46em;vertical-align:middle;
+  text-decoration-line:line-through;text-decoration-color:var(--red);text-decoration-thickness:.07em}
+.offer .valida{margin-top:8px;color:var(--red);font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.offer-foto{position:relative;z-index:1;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:380px}
+.offer-foto img{width:100%;height:100%;object-fit:cover}
+.offer::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(224,168,46,.18),transparent 60%);pointer-events:none}
+.offer .badge{margin-bottom:20px}
+.offer h2{font-size:clamp(30px,5.4vw,58px);margin-bottom:16px}
+.offer h2 .l2{color:var(--gold)}
+.offer p.desc{color:var(--muted);font-size:17px;max-width:46ch;margin:0 0 26px}
+.offer p.desc b{color:#fff}
+.offer .price{font-family:"Anton",sans-serif;color:var(--gold);font-size:clamp(60px,11vw,96px);line-height:.9}
+.offer .price .pre{display:inline-block;font-family:"Inter",sans-serif;color:var(--muted);font-size:17px;font-weight:600;margin-right:10px;vertical-align:middle}
+.offer .btn{margin-top:26px}
+.offer .fine{margin-top:16px;color:var(--muted);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+/* mobile: la card torna a colonna singola, foto sotto il testo.
+   Va dopo le regole .offer qui sopra, altrimenti verrebbe sovrascritta. */
+@media (max-width:700px){
+  .offer{grid-template-columns:1fr;gap:24px;padding:38px 20px;border-radius:20px;text-align:center}
+  .offerta-titolo{text-align:center}
+  .offer p.desc{margin:0 auto 26px}
+  .offer .price{margin-top:4px}
+  .offer-foto{min-height:230px}
+  .offer .btn{width:100%;max-width:360px}
+}
+
+/* ---- ESPERIENZA / GALLERY ---- */
+.exp h2{font-size:clamp(30px,5.2vw,56px);margin:6px 0 16px}
+.exp h2 .l2{color:var(--red)}
+.exp .intro{color:var(--muted);font-size:17px;max-width:58ch;margin:0 0 28px}
+.exp .intro b{color:var(--text);font-weight:600}
+.tile figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:38px 16px 15px;font-family:"Anton","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:18px;line-height:1.1;background:linear-gradient(180deg,transparent,rgba(10,9,8,.6) 38%,rgba(10,9,8,.95))}
+.tile figcaption{text-shadow:0 2px 12px rgba(0,0,0,.85)}
+/* banco: foto principale grande a sinistra, seconda in colonna stretta */
+.banco{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;height:440px}
+/* foto verticale delle cassette: inquadro la cassetta in basso, quella intera e più vicina */
+.tile-cassette img{object-position:50% 100%}
+.cucina{margin-top:52px}
+.cucina h3{font-size:clamp(26px,4.4vw,44px);margin-bottom:12px}
+/* galleria a incastro: due blocchi speculari, grande a sinistra poi grande a destra */
+.galleria{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:172px;gap:14px}
+.galleria .tile:nth-child(1){grid-column:1 / 5;grid-row:1 / 3}
+.galleria .tile:nth-child(2){grid-column:5 / 7;grid-row:1}
+.galleria .tile:nth-child(3){grid-column:5 / 7;grid-row:2}
+.galleria .tile:nth-child(4){grid-column:1 / 3;grid-row:3}
+.galleria .tile:nth-child(5){grid-column:1 / 3;grid-row:4}
+.galleria .tile:nth-child(6){grid-column:3 / 7;grid-row:3 / 5}
+.cucina .cta-row{text-align:center;margin-top:30px}
+.gallery{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:520px}
+.tile{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#14100e}
+.tile:nth-child(1){grid-row:1 / span 2}
+.tile img{width:100%;height:100%;object-fit:cover}
+.tile .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#5f574f;font-size:12.5px;text-align:center;padding:12px}
+.tile .ph svg{width:34px;height:34px;opacity:.5}
+@media (max-width:760px){
+  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:260px 190px;height:auto}
+  .tile:nth-child(1){grid-row:1;grid-column:1 / span 2}
+  .banco{grid-template-columns:1fr;grid-template-rows:250px 180px;height:auto}
+  .banco .tile{grid-column:1}
+  /* su mobile la tessera era una striscia bassa che tagliava la cassetta a metà:
+     le do le proporzioni della cassetta così entra tutta */
+  .banco{grid-template-rows:250px auto}
+  .banco .tile-cassette{aspect-ratio:478/320}
+  .cucina .cta-row .btn{width:100%;max-width:360px}
+  /* mobile: due larghe a tutta riga che incorniciano quattro tessere piccole */
+  .galleria{grid-template-columns:1fr 1fr;grid-auto-rows:132px}
+  .galleria .tile:nth-child(n){grid-column:auto;grid-row:auto}
+  .galleria .tile:nth-child(1),.galleria .tile:nth-child(6){grid-column:1 / 3;grid-row:span 2}
+}
+
+/* ---- RECENSIONE / STATS ---- */
+.review{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px}
+.review .quote{font-size:20px;line-height:1.5;color:var(--text);margin:12px 0}
+.review .who{color:var(--muted);font-size:14px}
+.review .stats{display:flex;gap:28px;justify-content:flex-end}
+.review .stat b{font-family:"Anton",sans-serif;color:var(--red);font-size:40px;line-height:1;display:block}
+.review .stat span{color:var(--muted);font-size:13px}
+@media (max-width:700px){.review{grid-template-columns:1fr;gap:22px}.review .stats{justify-content:flex-start}}
+
+/* ---- TROVACI QUI ---- */
+.find h2{font-size:clamp(30px,5.2vw,56px);margin:6px 0 26px}
+.find-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.hours{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.hours .row{display:flex;justify-content:space-between;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line);font-size:15px}
+.hours .row:last-child{border-bottom:none}
+.hours .row span:first-child{color:var(--muted)}
+.hours .row.addr{background:var(--card);font-weight:600}
+.hours .row.addr a{color:var(--red);text-decoration:none}
+.map{border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:300px;background:#14100e}
+.map iframe{width:100%;height:100%;min-height:300px;border:0;display:block;filter:grayscale(.3) contrast(1.05)}
+@media (max-width:760px){.find-grid{grid-template-columns:1fr}}
+
+/* ---- PRENOTAZIONE ---- */
+.book-sec{background:linear-gradient(180deg,#100c0a,#0a0908)}
+.book-head{text-align:center;margin-bottom:26px}
+.book-head h2{font-size:clamp(30px,5.4vw,58px);margin-top:6px}
+.book-head .badge{margin-top:14px}
+.book-head .spiega{margin:14px auto 0;max-width:46ch;color:#ded6cc;font-size:16px;line-height:1.5}
+.book-head .spiega b{color:#fff}
+/* contenitore dell'iframe Dinevo; scroll-margin: su desktop la barra in alto è
+   fissa e coprirebbe l'inizio del form quando ci si arriva dai bottoni */
+.book-embed{max-width:560px;margin:0 auto;scroll-margin-top:90px}
+.book-embed iframe{display:block}
+
+/* ---- FOOTER ---- */
+/* i 24px laterali vanno ripetuti: .foot viene dopo .wrap e con lo shorthand
+   "padding" ne azzererebbe i lati, incollando le scritte ai bordi */
+.foot{border-top:1px solid var(--line);padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:13.5px}
+.foot > *{min-width:0}
+.foot .logo{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:18px;color:var(--text);letter-spacing:.02em}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--red)}
+@media (max-width:600px){
+  .foot{flex-direction:column;align-items:flex-start;gap:10px;padding:24px 20px}
+}
+
+</style>
+
+<!-- Iubenda I Love Meat: banner cookie + loader policy -->
+<script type="text/javascript" src="https://embeds.iubenda.com/widgets/97822096-e054-4146-9989-b79928a6b141.js"></script>
+<script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1752658912398511');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">I Love Meat<small>Per veri carnivori</small></div>
+  <a class="btn" href="#book">Prenota un tavolo</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <img class="hero-bg" src="hero-porcini.jpg" alt="Cesto di funghi porcini freschi tra foglie di quercia e ghiande" onerror="this.style.display='none'">
+  <div class="wrap hero-inner">
+    <span class="badge"><span class="dot"></span>Solo per il mese di ottobre</span>
+    <h1 class="display">Menù completo<br>ai funghi<br><span class="l2">porcini.</span></h1>
+    <p class="lead offerta-hero"><b class="nome-offerta">Solo domenica a pranzo</b>Battuta di manzo ai funghi porcini – tagliolini freschi ai funghi porcini – scaloppina di maiale ai funghi porcini – bunet della tradizione</p>
+    <p class="prezzo-hero"><span class="pre">A soli</span><s>45€</s>30€</p>
+    <p class="scarsita">Pochi tavoli disponibili</p>
+    <div class="cta-row">
+      <a class="btn" href="#book">Prenota un tavolo</a>
+      <div class="rate"><span class="stars">★★★★★</span><br><b>4.9</b> · 500+ carnivori soddisfatti</div>
+    </div>
+  </div>
+</header>
+
+<!-- PRENOTAZIONE -->
+<section class="section book-sec">
+  <div class="wrap">
+    <div class="book-head">
+      <span class="kicker">Prenota</span>
+      <h2 class="display">Prenota un tavolo e riscatta l'offerta</h2>
+      <p class="spiega">Compilando il form prenoti un tavolo a tuo nome e potrai usufruire dell'offerta. <b>Sarà valida solo per la data inserita.</b></p>
+      <span class="badge"><span class="dot"></span>Pochi tavoli disponibili</span>
+    </div>
+
+    <!-- Form di prenotazione Dinevo. L'id "book" resta sul contenitore: è l'ancora
+         di tutti i bottoni "Prenota un tavolo" della pagina -->
+    <div class="book-embed" id="book">
+      <iframe
+        id="dinevo-booking"
+        src="https://api.dinevo.it/embed/r/est_e33a5577-5dea-4ff8-af37-250f70a276a0?promotion=promo_e5ce9a0f-71e3-4524-a82d-381997c27cad"
+        title="Prenota un tavolo"
+        height="900"
+        style="width: 100%; border: 0; border-radius: 22px; overflow: hidden"
+      ></iframe>
+    </div>
+    <script>
+      window.addEventListener('message', function (event) {
+        if (!event.data || event.data.type !== 'dinevo:booking-height') return;
+        var frame = document.getElementById('dinevo-booking');
+        if (!frame) return;
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) frame.style.transition = 'height 0.2s ease';
+        frame.style.height = event.data.height + 'px';
+      });
+      window.addEventListener('message', function (event) {
+        if (!event.data || event.data.type !== 'dinevo:booking-confirmed') return;
+        if (typeof window.fbq !== 'function') return;
+        var frame = document.getElementById('dinevo-booking');
+        if (!frame || event.source !== frame.contentWindow) return;
+        window.fbq('track', 'Schedule');
+      });
+    </script>
+  </div>
+</section>
+
+<!-- OFFERTA -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="display offerta-titolo">Offerta</h2>
+    <div class="offer">
+      <div class="offer-testo">
+        <span class="badge"><span class="dot"></span>Pochi tavoli disponibili</span>
+        <h2 class="display offer-title">
+          Menù <span class="l2">ai porcini</span>
+        </h2>
+        <p class="sfida display">Domenica a pranzo,<br><span class="l2">solo a ottobre.</span></p>
+        <p class="desc">Battuta di manzo ai funghi porcini – tagliolini freschi ai funghi porcini – scaloppina di maiale ai funghi porcini – bunet della tradizione</p>
+        <div class="price"><span class="pre">A soli</span><s>45€</s>30€</div>
+        <p class="valida">Pochi tavoli disponibili</p>
+        <a class="btn" href="#book">Prenota un tavolo</a>
+        <div class="fine">Pochi tavoli disponibili — di solito sold out</div>
+      </div>
+      <figure class="offer-foto">
+        <img src="offerta-porcini.jpg" alt="Cassette di funghi porcini freschi" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ESPERIENZA -->
+<section class="section exp">
+  <div class="wrap">
+    <span class="kicker">L'esperienza</span>
+    <h2 class="display">La domenica a pranzo<br><span class="l2">in famiglia</span></h2>
+    <p class="intro">Abbiamo avuto tra le mani <b>i migliori porcini della zona</b>, e abbiamo pensato di prepararvi un menù dedicato dall'antipasto al dolce.<br>Solo per ottobre potete gustare questa prelibatezza che la natura ci offre <b>una volta all'anno</b>.</p>
+
+    <div class="banco">
+      <figure class="tile">
+        <img src="hero-porcini.jpg" alt="Cesto di funghi porcini freschi tra foglie di quercia e ghiande" loading="lazy">
+        <figcaption>I migliori porcini della zona</figcaption>
+      </figure>
+      <figure class="tile tile-cassette">
+        <img src="offerta-porcini.jpg" alt="Cassette di funghi porcini freschi" loading="lazy">
+      </figure>
+    </div>
+
+    <div class="cucina">
+      <h3 class="display">La nostra Cucina</h3>
+      <p class="intro">Un viaggio di sapori che ti accompagna per tutta la sera.</p>
+      <div class="galleria">
+        <div class="tile"><img src="cucina-tartare-fichi.jpg" alt="Tartare di manzo con fichi e stracciatella" loading="lazy"></div>
+        <div class="tile"><img src="cucina-tartare-zucchine.jpg" alt="Tartare di manzo con zucchine e salsa" loading="lazy"></div>
+        <div class="tile"><img src="cucina-vitello-tonnato.jpg" alt="Vitello tonnato" loading="lazy"></div>
+        <div class="tile"><img src="cucina-carne-verdure.jpg" alt="Piatto di carne con peperoni, cavolfiore e rucola" loading="lazy"></div>
+        <div class="tile"><img src="cucina-agnolotti.jpg" alt="Agnolotti al sugo d'arrosto" loading="lazy"></div>
+        <div class="tile"><img src="cucina-orecchiette.jpg" alt="Orecchiette al pomodoro con briciole croccanti" loading="lazy"></div>
+      </div>
+      <div class="cta-row"><a class="btn" href="#book">Prenota un tavolo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENSIONE -->
+<section class="section">
+  <div class="wrap">
+    <div class="review">
+      <div>
+        <div class="stars">★★★★★</div>
+        <p class="quote">"La carne migliore che ho mangiato in città. Cottura perfetta, servizio veloce."</p>
+        <div class="who">— Marco T., Google Reviews</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4.9</b><span>rating medio</span></div>
+        <div class="stat"><b>500+</b><span>recensioni</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TROVACI QUI -->
+<section class="section find">
+  <div class="wrap">
+    <span class="kicker">Dove e quando</span>
+    <h2 class="display">Trovaci qui</h2>
+    <div class="find-grid">
+      <div class="hours">
+        <!-- Agosto: chiusi a pranzo, si serve solo la cena.
+             Orari da rimettere a settembre:
+               Lunedì – Venerdì  12:00–14:00 · 19:30–00:00
+               Sabato            Solo cena · 19:30–00:00
+               Domenica          12:00–14:00 · 19:30–00:00 -->
+        <div class="row"><span>Lunedì – Domenica</span><span>19:30–00:00</span></div>
+        <div class="row addr"><span>Indirizzo</span><a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a></div>
+      </div>
+      <div class="map">
+        <iframe src="https://www.google.com/maps?q=Largo%20II%20Giugno%202%20Pianezza%20TO&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa I Love Meat Pianezza"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="wrap foot">
+  <div class="logo">I Love Meat</div>
+  <div>
+    <a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a>
+    · <a href="tel:+393456881360">+39 345 688 1360</a>
+  </div>
+</footer>
+
+<script>
+/* Barra in alto: trasparente sull'hero, scura appena si scorre */
+(function () {
+  var nav = document.querySelector(".nav");
+  function aggiorna(){ nav.classList.toggle("scrolled", window.scrollY > 40); }
+  aggiorna();
+  window.addEventListener("scroll", aggiorna, {passive:true});
+})();
+</script>
+</body>
+</html>
