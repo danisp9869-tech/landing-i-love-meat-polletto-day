@@ -332,6 +332,9 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
         if (typeof window.fbq !== 'function') return;
         var frame = document.getElementById('dinevo-booking');
         if (!frame || event.source !== frame.contentWindow) return;
+        // la campagna Meta ottimizza sull'evento "Contatti" (Contact): senza questo
+        // le prenotazioni non risultano come conversioni. Schedule resta per lo storico.
+        window.fbq('track', 'Contact');
         window.fbq('track', 'Schedule');
       });
     </script>
