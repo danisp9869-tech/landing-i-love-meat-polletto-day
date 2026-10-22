@@ -481,7 +481,8 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 </footer>
 
 <script>
-/* Video dell'hero: verticale (1320x1900, il polletto che gira) su schermo stretto,
+/* Video dell'hero: verticale (1320x1900, il polletto che gira, ricompresso a 1 Mbit/s
+   perché parta anche con 4G debole: Safari avvia l'autoplay solo se pensa di farcela) su schermo stretto,
    orizzontale (1920x1300) sugli altri. Si sceglie una volta al caricamento, così
    ognuno scarica solo il suo. */
 (function () {
@@ -494,7 +495,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
   v.preload = "auto"; // con preload="none" iPhone a volte non avvia l'autoplay
   v.poster = mobile ? "hero-polletto-gira.jpg" : "hero-polletto-desktop.jpg";
-  v.src = mobile ? "hero-polletto-gira.mp4" : "hero-polletto-desktop.mp4";
+  v.src = mobile ? "hero-polletto-gira-leggero.mp4" : "hero-polletto-desktop.mp4";
   document.querySelector(".hero").classList.add("con-video");
   // Con Risparmio energetico (iPhone) o Risparmio dati (Android) il telefono blocca
   // l'autoplay di qualsiasi video: in quel caso resta il primo fotogramma a tutto
