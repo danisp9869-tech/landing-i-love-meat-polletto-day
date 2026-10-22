@@ -131,6 +131,12 @@ video.hero-video{filter:none;-webkit-mask-image:none;mask-image:none;
   /* video verticale: è già nel formato dello schermo, quindi copre tutto l'hero
      e sostituisce la foto */
   .hero-video{height:100%;object-position:center 50%}
+  /* il video mobile è chiaro (sfondo bordeaux, polletto e piatto chiari) e non ha
+     ombreggiatura: la velatura è più scura, con un alone più denso al centro dove
+     stanno le scritte, e in fondo sfuma nel nero della pagina */
+  .hero.con-video::before{background:
+    radial-gradient(ellipse 85% 55% at 50% 48%,rgba(10,9,8,.45),rgba(10,9,8,0) 70%),
+    linear-gradient(180deg,rgba(10,9,8,.6) 0%,rgba(10,9,8,.42) 35%,rgba(10,9,8,.5) 70%,rgba(10,9,8,.85) 90%,#0a0908 100%)}
   .hero .lead{font-size:17px}
   .hero .cta-row{flex-direction:column;gap:18px}
   /* bottone più compatto su telefono: largo quanto il testo, non tutta la riga */
@@ -485,7 +491,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 </footer>
 
 <script>
-/* Video dell'hero: verticale (1320x1900, il polletto che gira, ricompresso a 1 Mbit/s
+/* Video dell'hero: verticale (1320x1900, "polletto video che gira due", ricompresso a 1 Mbit/s
    perché parta anche con 4G debole: Safari avvia l'autoplay solo se pensa di farcela) su schermo stretto,
    orizzontale (1920x1300) sugli altri. Si sceglie una volta al caricamento, così
    ognuno scarica solo il suo. */
@@ -498,8 +504,8 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   v.muted = true; v.defaultMuted = true; v.setAttribute("muted", "");
   v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
   v.preload = "auto"; // con preload="none" iPhone a volte non avvia l'autoplay
-  v.poster = mobile ? "hero-polletto-gira.jpg" : "hero-polletto-desktop.jpg";
-  v.src = mobile ? "hero-polletto-gira-leggero.mp4" : "hero-polletto-desktop.mp4";
+  v.poster = mobile ? "hero-polletto-gira-due.jpg" : "hero-polletto-desktop.jpg";
+  v.src = mobile ? "hero-polletto-gira-due.mp4" : "hero-polletto-desktop.mp4";
   document.querySelector(".hero").classList.add("con-video");
   // Con Risparmio energetico (iPhone) o Risparmio dati (Android) il telefono blocca
   // l'autoplay di qualsiasi video: in quel caso resta il primo fotogramma a tutto
