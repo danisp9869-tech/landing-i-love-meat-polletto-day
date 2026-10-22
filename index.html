@@ -73,6 +73,10 @@ a{color:inherit}
 .hero .descr-hero{max-width:34ch;margin:16px auto 0;color:#f2ede6;font-size:clamp(16px,4.3vw,20px);
   line-height:1.45;font-weight:500;text-shadow:0 2px 12px rgba(0,0,0,.85)}
 /* hero essenziale: titolo, sottotitolo più piccolo e un solo bottone, al centro */
+/* scarsità sotto il bottone: piccola, in stampatello e sottile, ma in oro e con
+   ombra per restare leggibile sopra il video */
+.hero .scarsita-hero{margin:14px auto 0;color:var(--gold);font-family:"Inter",sans-serif;font-weight:500;
+  font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.9)}
 .hero .sottotitolo-hero{margin:14px auto 30px;color:#fff;font-family:"Anton","Arial Narrow",sans-serif;
   text-transform:uppercase;letter-spacing:.04em;line-height:1.1;font-size:clamp(20px,5.4vw,34px);
   text-shadow:0 2px 14px rgba(0,0,0,.8)}
@@ -124,7 +128,8 @@ a{color:inherit}
     mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
   .hero .lead{font-size:17px}
   .hero .cta-row{flex-direction:column;gap:18px}
-  .hero .cta-row .btn{width:100%;max-width:360px;font-size:24px;padding:19px 24px}
+  /* bottone più compatto su telefono: largo quanto il testo, non tutta la riga */
+  .hero .cta-row .btn{width:auto;font-size:19px;padding:14px 30px}
   .hero .rate{text-align:center;font-size:14px}
   .section{padding:30px 0}
   .grid2{grid-template-columns:1fr}
@@ -186,7 +191,7 @@ a{color:inherit}
   .offer p.desc{margin:0 auto 26px}
   .offer .price{margin-top:4px}
   .offer-foto{min-height:230px}
-  .offer .btn{width:100%;max-width:360px}
+  .offer .btn{width:auto;font-size:19px;padding:14px 30px}
 }
 
 /* ---- ESPERIENZA / GALLERY ---- */
@@ -226,7 +231,7 @@ a{color:inherit}
      le do le proporzioni della cassetta così entra tutta */
   .banco{grid-template-rows:250px auto}
   .banco .tile-cassette{aspect-ratio:478/320}
-  .cucina .cta-row .btn{width:100%;max-width:360px}
+  .cucina .cta-row .btn{width:auto;font-size:19px;padding:14px 30px}
   /* mobile: grande in cima, due piccole affiancate, poi due larghe a tutta riga */
   .galleria{grid-template-columns:1fr 1fr;grid-auto-rows:132px}
   .galleria .tile:nth-child(n){grid-column:auto;grid-row:auto}
@@ -328,6 +333,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     <div class="cta-row">
       <a class="btn" href="#book">Prenota un tavolo</a>
     </div>
+    <p class="scarsita-hero">Posti limitati · Sempre sold out</p>
   </div>
 </header>
 
