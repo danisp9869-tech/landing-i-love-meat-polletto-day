@@ -106,6 +106,9 @@ a{color:inherit}
   .nav{position:sticky;background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
   /* l'hero riempie lo schermo sotto la barra, con il testo al centro del video */
   .hero{min-height:calc(100svh - 78px);padding:34px 0 44px}
+  /* col video l'hero prende le proporzioni del video (1320x1900): così il video
+     entra intero in larghezza, senza zoom né tagli ai lati */
+  .hero.con-video{min-height:0;aspect-ratio:1320/1900}
   /* su schermo stretto "cover" ritaglia troppo: accorcio la foto così inquadra
      più larga, la sfumo in basso per non lasciare uno stacco netto e la scurisco
      per tenere leggibili le scritte */
@@ -470,14 +473,15 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 </footer>
 
 <script>
-/* Video dell'hero: verticale (1320x1900) su schermo stretto, orizzontale (1920x1300)
-   sugli altri. Si sceglie una volta al caricamento: ognuno pesa ~9 MB. */
+/* Video dell'hero: verticale (1320x1900, il polletto che gira) su schermo stretto,
+   orizzontale (1920x1300) sugli altri. Si sceglie una volta al caricamento, così
+   ognuno scarica solo il suo. */
 (function () {
   var v = document.querySelector(".hero-video");
   if (!v) return;
   var mobile = window.matchMedia("(max-width:600px)").matches;
-  v.poster = mobile ? "hero-polletto-video.jpg" : "hero-polletto-desktop.jpg";
-  v.src = mobile ? "hero-polletto.mp4" : "hero-polletto-desktop.mp4";
+  v.poster = mobile ? "hero-polletto-gira.jpg" : "hero-polletto-desktop.jpg";
+  v.src = mobile ? "hero-polletto-gira.mp4" : "hero-polletto-desktop.mp4";
   document.querySelector(".hero").classList.add("con-video");
   var p = v.play(); if (p && p.catch) p.catch(function(){});
 })();
