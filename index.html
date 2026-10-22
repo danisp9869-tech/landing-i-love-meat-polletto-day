@@ -45,7 +45,8 @@ a{color:inherit}
 /* fissa e trasparente: la foto dell'hero passa sotto e arriva fino in cima.
    La barra scura ricompare solo quando si scorre, per non perdere leggibilità. */
 .nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;background:transparent;border-bottom:1px solid transparent;transition:background .25s,border-color .25s}
-.nav.scrolled{background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+/* niente backdrop-filter: sopra il video dell'hero fa sballare il disegno del video su iPhone */
+.nav.scrolled{background:rgba(10,9,8,.94);border-bottom-color:var(--line)}
 .nav .logo{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:20px;letter-spacing:.02em;line-height:1}
 .nav .logo small{display:block;color:var(--red);font-family:"Inter",sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.22em;margin-top:3px}
 .nav .btn{padding:11px 22px;font-size:18px}
@@ -70,7 +71,7 @@ video.hero-video{filter:none;-webkit-mask-image:none;mask-image:none;
 .hero-video::-webkit-media-controls,.hero-video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,9,8,.42),rgba(10,9,8,.2) 42%,rgba(10,9,8,.94) 96%)}
 .hero-inner{position:relative;z-index:2;max-width:1120px}
-.hero .badge{margin-bottom:18px;background:rgba(10,9,8,.55);backdrop-filter:blur(4px)}
+.hero .badge{margin-bottom:18px;background:rgba(10,9,8,.7)}
 .hero h1{font-size:clamp(64px,13vw,196px);text-shadow:0 4px 34px rgba(0,0,0,.65)}
 .hero h1 .l2{color:var(--red)}
 /* titolo su due righe ("Polletto" / "alla griglia"): ogni riga resta intera,
@@ -116,7 +117,7 @@ video.hero-video{filter:none;-webkit-mask-image:none;mask-image:none;
 @media (max-width:600px){
   .wrap{padding:0 20px}
   /* su mobile la barra resta scura e nel flusso, come prima */
-  .nav{position:sticky;background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+  .nav{position:sticky;background:#0a0908;border-bottom-color:var(--line)}
   /* l'hero riempie lo schermo sotto la barra, con il testo al centro del video */
   .hero{min-height:calc(100svh - 78px);padding:34px 0 44px}
   /* col video l'hero prende le proporzioni del video (1320x1900): così il video
@@ -130,7 +131,10 @@ video.hero-video{filter:none;-webkit-mask-image:none;mask-image:none;
     mask-image:linear-gradient(180deg,#000 68%,transparent 100%)}
   /* video verticale: è già nel formato dello schermo, quindi copre tutto l'hero
      e sostituisce la foto */
+  /* l'hero ha già le proporzioni del video: niente ritaglio "cover", il video
+     riempie il riquadro così com'è (meno lavoro per Safari, nessun ricalcolo) */
   .hero-video{height:100%;object-position:center 50%}
+  video.hero-video{object-fit:fill}
   /* il video mobile è chiaro (sfondo bordeaux, polletto e piatto chiari) e non ha
      ombreggiatura: la velatura è più scura, con un alone più denso al centro dove
      stanno le scritte, e in fondo sfuma nel nero della pagina */
