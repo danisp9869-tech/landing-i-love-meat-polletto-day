@@ -343,7 +343,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 <!-- HERO -->
 <header class="hero">
   <picture>
-    <source media="(max-width:600px)" srcset="hero-polletto-gira-due.jpg">
+    <source media="(max-width:600px)" srcset="hero-polletto-loop.jpg">
     <img class="hero-bg hero-foto" src="hero-polletto-desktop.jpg" alt="Polletto alla griglia dorato e croccante" onerror="this.style.display='none'">
   </picture>
   <!-- video di sfondo: sorgente e anteprima le mette lo script in fondo, così ogni
@@ -505,8 +505,11 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 </footer>
 
 <script>
-/* Video dell'hero: verticale (1320x1900, "polletto video che gira due", 1 Mbit/s)
-   su schermo stretto, orizzontale (1920x1300) sugli altri.
+/* Video dell'hero: verticale (1320x1900) su schermo stretto, orizzontale (1920x1300)
+   sugli altri. Il verticale è un loop continuo ricavato dai primi 19,5 s di
+   "polletto video che gira due" (dopo, il video originale rimpicciolisce il
+   polletto in un riquadro con bordo nero): fine e inizio sfumano l'una nell'altro,
+   1 Mbit/s, ~18 s, 2,3 MB.
    - Lo scarico TUTTO prima di farlo partire: con 4G debole, se va in streaming si
      ferma ad aspettare dati e iPhone in quelle pause lo disegna piccolo e spostato.
      Intero in memoria parte e gira in loop senza più interruzioni.
@@ -518,7 +521,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   var v = document.querySelector(".hero-video");
   if (!v) return;
   var mobile = window.matchMedia("(max-width:600px)").matches;
-  var url = mobile ? "hero-polletto-gira-due.mp4" : "hero-polletto-desktop.mp4";
+  var url = mobile ? "hero-polletto-loop.mp4" : "hero-polletto-desktop.mp4";
   v.muted = true; v.defaultMuted = true; v.setAttribute("muted", "");
   v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
   v.removeAttribute("poster");
