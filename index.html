@@ -508,7 +508,15 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     var img = document.createElement("img");
     img.className = "hero-bg hero-video hero-video-img";
     img.alt = ""; img.setAttribute("aria-hidden", "true");
-    img.onload = function(){ v.style.display = "none"; };
+    // misura fissata sull'elemento: deve coprire l'hero come il video, mai restringersi
+    img.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;visibility:hidden";
+    // lo mostro solo se il browser l'ha davvero decodificato; altrimenti lo tolgo e
+    // resta il video normale (con il primo fotogramma come anteprima)
+    img.onload = function(){
+      if (img.naturalWidth > 0) { img.style.visibility = "visible"; v.style.visibility = "hidden"; }
+      else { img.remove(); }
+    };
+    img.onerror = function(){ img.remove(); };
     img.src = v.currentSrc || v.src;
     v.parentNode.insertBefore(img, v.nextSibling);
   }
@@ -528,7 +536,8 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   });
   v.addEventListener("playing", function(){
     var img = document.querySelector(".hero-video-img");
-    if (img) { img.remove(); v.style.display = ""; }
+    if (img) img.remove();
+    v.style.visibility = "";
     ["touchstart", "touchend", "click", "scroll"].forEach(function(ev){
       window.removeEventListener(ev, alPrimoGesto);
     });
