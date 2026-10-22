@@ -59,6 +59,8 @@ a{color:inherit}
 .hero-video{display:none}
 .hero.con-video .hero-video{display:block}
 .hero.con-video .hero-foto{display:none}
+/* iPhone mostra un grosso pulsante play se l'autoplay è bloccato: lo nascondo, il video parte al primo tocco */
+.hero-video::-webkit-media-controls,.hero-video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,9,8,.42),rgba(10,9,8,.2) 42%,rgba(10,9,8,.94) 96%)}
 .hero-inner{position:relative;z-index:2;max-width:1120px}
 .hero .badge{margin-bottom:18px;background:rgba(10,9,8,.55);backdrop-filter:blur(4px)}
@@ -317,7 +319,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   <img class="hero-bg hero-foto" src="hero-polletto.jpg" alt="Polletto alla griglia dorato e croccante" onerror="this.style.display='none'">
   <!-- video di sfondo: sorgente e anteprima le mette lo script in fondo, così ogni
        dispositivo scarica solo il suo (verticale su mobile, orizzontale su desktop) -->
-  <video class="hero-bg hero-video" muted playsinline loop autoplay preload="none" aria-hidden="true"></video>
+  <video class="hero-bg hero-video" muted playsinline webkit-playsinline loop autoplay preload="none" disablepictureinpicture aria-hidden="true"></video>
   <div class="wrap hero-inner">
     <span class="badge"><span class="dot"></span>Pianezza · Largo II Giugno 2</span>
     <h1 class="display">Polletto<br><span class="l2">alla griglia</span></h1>
@@ -480,10 +482,28 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   var v = document.querySelector(".hero-video");
   if (!v) return;
   var mobile = window.matchMedia("(max-width:600px)").matches;
+  // i telefoni fanno partire da soli solo i video muti e "in pagina": lo imposto
+  // anche da codice, non basta l'attributo nell'HTML (Safari iOS, alcuni Android)
+  v.muted = true; v.defaultMuted = true; v.setAttribute("muted", "");
+  v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
+  v.preload = "auto"; // con preload="none" iPhone a volte non avvia l'autoplay
   v.poster = mobile ? "hero-polletto-gira.jpg" : "hero-polletto-desktop.jpg";
   v.src = mobile ? "hero-polletto-gira.mp4" : "hero-polletto-desktop.mp4";
   document.querySelector(".hero").classList.add("con-video");
-  var p = v.play(); if (p && p.catch) p.catch(function(){});
+  function avvia(){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+  v.load(); avvia();
+  v.addEventListener("canplay", function(){ if (v.paused) avvia(); });
+  // con Risparmio energetico (iPhone) o Risparmio dati (Android) l'autoplay è
+  // bloccato dal telefono: il video parte al primo tocco o scorrimento
+  function alPrimoGesto(){ if (v.paused) avvia(); }
+  ["touchstart", "touchend", "click", "scroll"].forEach(function(ev){
+    window.addEventListener(ev, alPrimoGesto, { passive: true });
+  });
+  v.addEventListener("playing", function(){
+    ["touchstart", "touchend", "click", "scroll"].forEach(function(ev){
+      window.removeEventListener(ev, alPrimoGesto);
+    });
+  });
 })();
 
 /* Barra in alto: trasparente sull'hero, scura appena si scorre */
