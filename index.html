@@ -496,36 +496,12 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   v.poster = mobile ? "hero-polletto-gira.jpg" : "hero-polletto-desktop.jpg";
   v.src = mobile ? "hero-polletto-gira.mp4" : "hero-polletto-desktop.mp4";
   document.querySelector(".hero").classList.add("con-video");
-  // Piano B per iPhone/iPad: se il telefono blocca l'autoplay (Risparmio energetico,
-  // browser interni di Instagram/Facebook) Safari sa riprodurre lo stesso mp4 dentro
-  // un <img>, come una GIF: muto, in loop, e senza bisogno di tocchi.
-  var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
-            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  var pianoB = false;
-  function usaImmagine(){
-    if (pianoB || !ios) return;
-    pianoB = true;
-    var img = document.createElement("img");
-    img.className = "hero-bg hero-video hero-video-img";
-    img.alt = ""; img.setAttribute("aria-hidden", "true");
-    // misura fissata sull'elemento: deve coprire l'hero come il video, mai restringersi
-    img.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;visibility:hidden";
-    // lo mostro solo se il browser l'ha davvero decodificato; altrimenti lo tolgo e
-    // resta il video normale (con il primo fotogramma come anteprima)
-    img.onload = function(){
-      if (img.naturalWidth > 0) { img.style.visibility = "visible"; v.style.visibility = "hidden"; }
-      else { img.remove(); }
-    };
-    img.onerror = function(){ img.remove(); };
-    img.src = v.currentSrc || v.src;
-    v.parentNode.insertBefore(img, v.nextSibling);
-  }
-  function avvia(){
-    var p = v.play();
-    if (p && p.catch) p.catch(function(e){ if (e && e.name === "NotAllowedError") usaImmagine(); });
-  }
-  // se dopo 2 secondi il video è ancora fermo, passo comunque al piano B
-  setTimeout(function(){ if (v.paused) usaImmagine(); }, 2000);
+  // Con Risparmio energetico (iPhone) o Risparmio dati (Android) il telefono blocca
+  // l'autoplay di qualsiasi video: in quel caso resta il primo fotogramma a tutto
+  // schermo e il video parte al primo tocco o scorrimento (vedi sotto).
+  // NB: niente trucco "mp4 dentro <img>": su iPhone (Safari e Chrome) lo disegna
+  // piccolo e spostato invece che a tutto schermo.
+  function avvia(){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
   v.load(); avvia();
   v.addEventListener("canplay", function(){ if (v.paused) avvia(); });
   // con Risparmio energetico (iPhone) o Risparmio dati (Android) l'autoplay è
@@ -535,9 +511,6 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     window.addEventListener(ev, alPrimoGesto, { passive: true });
   });
   v.addEventListener("playing", function(){
-    var img = document.querySelector(".hero-video-img");
-    if (img) img.remove();
-    v.style.visibility = "";
     ["touchstart", "touchend", "click", "scroll"].forEach(function(ev){
       window.removeEventListener(ev, alPrimoGesto);
     });
