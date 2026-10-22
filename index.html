@@ -58,6 +58,13 @@ a{color:inherit}
    in fondo). Finché non parte, o se JS è spento, resta la foto. */
 .hero-video{display:none}
 .hero.con-video .hero-video{display:block}
+/* IMPORTANTE: sul <video> niente filter né mask-image. Su iPhone (Safari e Chrome)
+   con filtri o maschere il fotogramma ogni tanto viene ridisegnato piccolo e
+   spostato dentro un riquadro nero. Lo scurimento e la sfumatura li fa la
+   velatura .hero.con-video::before qui sotto, che sta sopra il video. */
+video.hero-video{filter:none;-webkit-mask-image:none;mask-image:none;
+  top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover}
+.hero.con-video::before{background:linear-gradient(180deg,rgba(10,9,8,.5),rgba(10,9,8,.32) 42%,rgba(10,9,8,.55) 78%,rgba(10,9,8,1) 100%)}
 .hero.con-video .hero-foto{display:none}
 /* iPhone mostra un grosso pulsante play se l'autoplay è bloccato: lo nascondo, il video parte al primo tocco */
 .hero-video::-webkit-media-controls,.hero-video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
@@ -123,9 +130,7 @@ a{color:inherit}
     mask-image:linear-gradient(180deg,#000 68%,transparent 100%)}
   /* video verticale: è già nel formato dello schermo, quindi copre tutto l'hero
      e sostituisce la foto */
-  .hero-video{height:100%;object-position:center 50%;filter:brightness(.72) saturate(1.08);
-    -webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%);
-    mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
+  .hero-video{height:100%;object-position:center 50%}
   .hero .lead{font-size:17px}
   .hero .cta-row{flex-direction:column;gap:18px}
   /* bottone più compatto su telefono: largo quanto il testo, non tutta la riga */
@@ -141,10 +146,9 @@ a{color:inherit}
   /* l'hero occupa tutto lo schermo: il video orizzontale (1920x1300) ha quasi le
      proporzioni del monitor, così si vede quasi intero invece che a striscia */
   .hero{min-height:100vh;padding:92px 0 40px}
-  /* su desktop il video si vede più chiaro: meno filtro e velatura più leggera,
-     le scritte restano leggibili grazie all'ombra */
-  .hero.con-video .hero-video{filter:brightness(.82) saturate(1.08)}
-  .hero.con-video::before{background:linear-gradient(180deg,rgba(10,9,8,.35),rgba(10,9,8,.12) 45%,rgba(10,9,8,.85) 100%)}
+  /* su desktop il video si vede più chiaro: velatura più leggera (niente filtri
+     sul video, vedi sopra), le scritte restano leggibili grazie all'ombra */
+  .hero.con-video::before{background:linear-gradient(180deg,rgba(10,9,8,.45),rgba(10,9,8,.25) 45%,rgba(10,9,8,.9) 100%)}
   .hero .badge{margin-bottom:14px}
   .hero h1{font-size:clamp(64px,8.6vw,124px)}
   .hero .lead{font-size:18px;margin:18px auto 26px}
