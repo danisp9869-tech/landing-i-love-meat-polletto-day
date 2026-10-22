@@ -54,13 +54,26 @@ a{color:inherit}
 /* ---- HERO (testo sopra immagine scurita) ---- */
 .hero{position:relative;overflow:hidden;min-height:74vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:98px 0 60px}
 .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:brightness(.68) saturate(1.08);z-index:0}
+/* video di sfondo: verticale su mobile, orizzontale su desktop (lo sceglie lo script
+   in fondo). Finché non parte, o se JS è spento, resta la foto. */
+.hero-video{display:none}
+.hero.con-video .hero-video{display:block}
+.hero.con-video .hero-foto{display:none}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,9,8,.42),rgba(10,9,8,.2) 42%,rgba(10,9,8,.94) 96%)}
 .hero-inner{position:relative;z-index:2;max-width:1120px}
 .hero .badge{margin-bottom:18px;background:rgba(10,9,8,.55);backdrop-filter:blur(4px)}
 .hero h1{font-size:clamp(64px,13vw,196px);text-shadow:0 4px 34px rgba(0,0,0,.65)}
 .hero h1 .l2{color:var(--red)}
-/* "Polletto day" deve stare su una riga sola: niente a capo e corpo legato alla larghezza */
-.hero h1{white-space:nowrap;font-size:clamp(40px,12.5vw,150px)}
+/* titolo su due righe ("Polletto" / "alla griglia"): ogni riga resta intera,
+   il corpo segue la larghezza così la riga lunga non esce dallo schermo */
+.hero h1{white-space:nowrap;font-size:clamp(34px,15vw,150px)}
+/* frase descrittiva sotto il titolo: piccola e in carattere normale (Inter) */
+.hero .descr-hero{max-width:34ch;margin:16px auto 0;color:#f2ede6;font-size:clamp(16px,4.3vw,20px);
+  line-height:1.45;font-weight:500;text-shadow:0 2px 12px rgba(0,0,0,.85)}
+/* hero essenziale: titolo, sottotitolo più piccolo e un solo bottone, al centro */
+.hero .sottotitolo-hero{margin:14px auto 30px;color:#fff;font-family:"Anton","Arial Narrow",sans-serif;
+  text-transform:uppercase;letter-spacing:.04em;line-height:1.1;font-size:clamp(20px,5.4vw,34px);
+  text-shadow:0 2px 14px rgba(0,0,0,.8)}
 .hero .lead{color:#eadfd4;font-size:19px;max-width:42ch;margin:24px auto 32px;text-shadow:0 2px 16px rgba(0,0,0,.8)}
 /* Offerta nell'hero con la stessa impostazione delle altre landing I Love Meat
    (ferragosto, bombette): pillola in oro, nome del tagliere e cosa contiene,
@@ -91,13 +104,19 @@ a{color:inherit}
   .wrap{padding:0 20px}
   /* su mobile la barra resta scura e nel flusso, come prima */
   .nav{position:sticky;background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
-  .hero{min-height:auto;padding:34px 0 44px}
+  /* l'hero riempie lo schermo sotto la barra, con il testo al centro del video */
+  .hero{min-height:calc(100svh - 78px);padding:34px 0 44px}
   /* su schermo stretto "cover" ritaglia troppo: accorcio la foto così inquadra
      più larga, la sfumo in basso per non lasciare uno stacco netto e la scurisco
      per tenere leggibili le scritte */
   .hero-bg{height:78%;filter:brightness(.6) saturate(1.08);object-position:center 42%;
     -webkit-mask-image:linear-gradient(180deg,#000 68%,transparent 100%);
     mask-image:linear-gradient(180deg,#000 68%,transparent 100%)}
+  /* video verticale: è già nel formato dello schermo, quindi copre tutto l'hero
+     e sostituisce la foto */
+  .hero-video{height:100%;object-position:center 50%;filter:brightness(.72) saturate(1.08);
+    -webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 78%,transparent 100%)}
   .hero .lead{font-size:17px}
   .hero .cta-row{flex-direction:column;gap:18px}
   .hero .cta-row .btn{width:100%;max-width:360px;font-size:24px;padding:19px 24px}
@@ -109,7 +128,13 @@ a{color:inherit}
 /* Desktop: l'hero deve stare dentro la prima schermata e lasciar intravedere
    la sezione sotto. Su mobile resta com'è. */
 @media (min-width:1000px){
-  .hero{min-height:auto;padding:92px 0 40px}
+  /* l'hero occupa tutto lo schermo: il video orizzontale (1920x1300) ha quasi le
+     proporzioni del monitor, così si vede quasi intero invece che a striscia */
+  .hero{min-height:100vh;padding:92px 0 40px}
+  /* su desktop il video si vede più chiaro: meno filtro e velatura più leggera,
+     le scritte restano leggibili grazie all'ombra */
+  .hero.con-video .hero-video{filter:brightness(.82) saturate(1.08)}
+  .hero.con-video::before{background:linear-gradient(180deg,rgba(10,9,8,.35),rgba(10,9,8,.12) 45%,rgba(10,9,8,.85) 100%)}
   .hero .badge{margin-bottom:14px}
   .hero h1{font-size:clamp(64px,8.6vw,124px)}
   .hero .lead{font-size:18px;margin:18px auto 26px}
@@ -300,19 +325,43 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 
 <!-- HERO -->
 <header class="hero">
-  <img class="hero-bg" src="hero-polletto.jpg" alt="Polletto alla griglia dorato e croccante" onerror="this.style.display='none'">
+  <img class="hero-bg hero-foto" src="hero-polletto.jpg" alt="Polletto alla griglia dorato e croccante" onerror="this.style.display='none'">
+  <!-- video di sfondo: sorgente e anteprima le mette lo script in fondo, così ogni
+       dispositivo scarica solo il suo (verticale su mobile, orizzontale su desktop) -->
+  <video class="hero-bg hero-video" muted playsinline loop autoplay preload="none" aria-hidden="true"></video>
   <div class="wrap hero-inner">
     <span class="badge"><span class="dot"></span>Pianezza · Largo II Giugno 2</span>
-    <h1 class="display">Polletto <span class="l2">day</span></h1>
-    <p class="lead offerta-hero"><b class="nome-offerta">Ogni giovedì sera</b>1 kg di polletto alla griglia con patate al forno e una bionda media</p>
-    <p class="prezzo-hero"><span class="pre">A soli</span>18,90€</p>
-    <p class="scarsita">Posti limitati</p>
+    <h1 class="display">Polletto<br><span class="l2">alla griglia</span></h1>
+    <p class="descr-hero">Cotto a bassa temperatura e passato in griglia, tenero e succoso</p>
+    <p class="sottotitolo-hero">Ogni giovedì sera Polletto Day</p>
     <div class="cta-row">
-      <a class="btn" href="#book">Prenota il tuo giovedì sera</a>
-      <div class="rate"><span class="stars">★★★★★</span><br><b>4.9</b> · 500+ carnivori soddisfatti</div>
+      <a class="btn" href="#book">Prenota un tavolo</a>
     </div>
   </div>
 </header>
+
+<!-- OFFERTA -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="display offerta-titolo">Offerta</h2>
+    <div class="offer">
+      <div class="offer-testo">
+        <span class="badge"><span class="dot"></span>Posti limitati</span>
+        <h2 class="display offer-title">
+          Polletto <span class="l2">day</span>
+        </h2>
+        <p class="sfida display"><span class="l2">Ogni giovedì sera</span></p>
+        <p class="desc"><b>1 kg di polletto alla griglia</b> con patate al forno e una bionda media</p>
+        <div class="price"><span class="pre">A soli</span>18,90€</div>
+        <a class="btn" href="#book">Prenota un tavolo</a>
+        <div class="fine">Posti limitati</div>
+      </div>
+      <figure class="offer-foto">
+        <img src="offerta-polletto.jpg" alt="Piatto di polletto alla griglia con patate al forno" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- PRENOTAZIONE -->
 <section class="section book-sec">
@@ -361,29 +410,6 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- OFFERTA -->
-<section class="section">
-  <div class="wrap">
-    <h2 class="display offerta-titolo">Offerta</h2>
-    <div class="offer">
-      <div class="offer-testo">
-        <span class="badge"><span class="dot"></span>Posti limitati</span>
-        <h2 class="display offer-title">
-          Polletto <span class="l2">day</span>
-        </h2>
-        <p class="sfida display"><span class="l2">Ogni giovedì sera</span></p>
-        <p class="desc"><b>1 kg di polletto alla griglia</b> con patate al forno e una bionda media</p>
-        <div class="price"><span class="pre">A soli</span>18,90€</div>
-        <a class="btn" href="#book">Prenota il tuo giovedì sera</a>
-        <div class="fine">Posti limitati</div>
-      </div>
-      <figure class="offer-foto">
-        <img src="offerta-polletto.jpg" alt="Piatto di polletto alla griglia con patate al forno" loading="lazy">
-      </figure>
-    </div>
-  </div>
-</section>
-
 
 <!-- ESPERIENZA -->
 <section class="section exp">
@@ -404,7 +430,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
         <div class="tile"><img src="carne-spiedini.jpg" alt="Spiedini e involtini di carne al banco" loading="lazy"></div>
         <div class="tile"><img src="carne-banco.jpg" alt="Il frigo della carne di I Love Meat" loading="lazy"></div>
       </div>
-      <div class="cta-row"><a class="btn" href="#book">Prenota il tuo giovedì sera</a></div>
+      <div class="cta-row"><a class="btn" href="#book">Prenota un tavolo</a></div>
     </div>
   </div>
 </section>
@@ -458,6 +484,18 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 </footer>
 
 <script>
+/* Video dell'hero: verticale (1320x1900) su schermo stretto, orizzontale (1920x1300)
+   sugli altri. Si sceglie una volta al caricamento: ognuno pesa ~9 MB. */
+(function () {
+  var v = document.querySelector(".hero-video");
+  if (!v) return;
+  var mobile = window.matchMedia("(max-width:600px)").matches;
+  v.poster = mobile ? "hero-polletto-video.jpg" : "hero-polletto-desktop.jpg";
+  v.src = mobile ? "hero-polletto.mp4" : "hero-polletto-desktop.mp4";
+  document.querySelector(".hero").classList.add("con-video");
+  var p = v.play(); if (p && p.catch) p.catch(function(){});
+})();
+
 /* Barra in alto: trasparente sull'hero, scura appena si scorre */
 (function () {
   var nav = document.querySelector(".nav");
