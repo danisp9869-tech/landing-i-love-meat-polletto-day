@@ -160,12 +160,14 @@ video.hero-video{filter:none;-webkit-mask-image:none;mask-image:none;
 /* Desktop: l'hero deve stare dentro la prima schermata e lasciar intravedere
    la sezione sotto. Su mobile resta com'è. */
 @media (min-width:1000px){
-  /* l'hero occupa tutto lo schermo: il video orizzontale (1920x1300) ha quasi le
+  /* l'hero occupa tutto lo schermo: il video orizzontale (1920x1500) ha quasi le
      proporzioni del monitor, così si vede quasi intero invece che a striscia */
   .hero{min-height:100vh;padding:92px 0 40px}
-  /* su desktop il video si vede più chiaro: velatura più leggera (niente filtri
-     sul video, vedi sopra), le scritte restano leggibili grazie all'ombra */
-  .hero.con-video::before{background:linear-gradient(180deg,rgba(10,9,8,.45),rgba(10,9,8,.25) 45%,rgba(10,9,8,.9) 100%)}
+  /* il video desktop è chiaro (sfondo bordeaux, polletto chiaro): velatura scura
+     con alone più denso al centro dietro le scritte, in fondo sfuma nel nero */
+  .hero.con-video::before{background:
+    radial-gradient(ellipse 60% 55% at 50% 50%,rgba(10,9,8,.5),rgba(10,9,8,0) 70%),
+    linear-gradient(180deg,rgba(10,9,8,.7) 0%,rgba(10,9,8,.55) 35%,rgba(10,9,8,.62) 72%,rgba(10,9,8,.9) 90%,#0a0908 100%)}
   .hero .badge{margin-bottom:14px}
   .hero h1{font-size:clamp(64px,8.6vw,124px)}
   .hero .lead{font-size:18px;margin:18px auto 26px}
@@ -350,7 +352,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
        altrimenti iPhone non lo fa partire da solo. -->
   <picture>
     <source media="(max-width:600px)" srcset="hero-polletto-loop.jpg">
-    <img class="hero-bg hero-foto" src="hero-polletto-desktop.jpg" alt="Polletto alla griglia dorato e croccante" onerror="this.style.display='none'">
+    <img class="hero-bg hero-foto" src="hero-polletto-loop-desktop.jpg" alt="Polletto alla griglia dorato e croccante" onerror="this.style.display='none'">
   </picture>
   <div class="wrap hero-inner">
     <span class="badge"><span class="dot"></span>Pianezza · Largo II Giugno 2</span>
@@ -508,7 +510,8 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 </footer>
 
 <script>
-/* Video dell'hero: verticale (1320x1900) su schermo stretto, orizzontale (1920x1300)
+/* Video dell'hero: verticale (1320x1900) su schermo stretto, orizzontale (1920x1500,
+   "polletto che gira desktop", loop continuo come quello mobile, 2,5 Mbit/s, 5,7 MB)
    sugli altri. Il verticale è un loop continuo ricavato dai primi 19,5 s di
    "polletto video che gira due" (dopo, il video originale rimpicciolisce il
    polletto in un riquadro con bordo nero): fine e inizio sfumano l'una nell'altro,
@@ -524,7 +527,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   var v = document.querySelector(".hero-video");
   if (!v) return;
   var mobile = window.matchMedia("(max-width:600px)").matches;
-  var url = mobile ? "hero-polletto-loop.mp4" : "hero-polletto-desktop.mp4";
+  var url = mobile ? "hero-polletto-loop.mp4" : "hero-polletto-loop-desktop.mp4";
   v.muted = true; v.defaultMuted = true; v.setAttribute("muted", "");
   v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
   v.removeAttribute("poster");
